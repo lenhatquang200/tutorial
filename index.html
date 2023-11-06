@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Workshop Chat với SocketIO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+<style>
+    a.clipboard {
+        text-decoration: none;
+    }
+
+    .code {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
+<div class="container-fluid">
+    <h1>
+        Workshop Chat với SocketIO - Tutorial Step by step
+    </h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-3 col-12">
+            <ul class="nav nav-tabs nav-pills flex-column" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="tab1" data-bs-toggle="tab" data-bs-target="#tab1pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 1: Setup NodeJS
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab2" data-bs-toggle="tab" data-bs-target="#tab2pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 2: Tạo thư mục
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab3" data-bs-toggle="tab" data-bs-target="#tab3pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 3: Khởi tạo Nodejs
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab4" data-bs-toggle="tab" data-bs-target="#tab4pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 4: Thiết lập server.js
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab5" data-bs-toggle="tab" data-bs-target="#tab5pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 5: Khung website
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab6" data-bs-toggle="tab" data-bs-target="#tab6pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 6: Tạo không gian làm việc
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab7" data-bs-toggle="tab" data-bs-target="#tab7pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 7: Kiểm tra giao diện
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab8" data-bs-toggle="tab" data-bs-target="#tab8pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 8: Lắng nghe & xử lý kết nối ở server.js
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab9" data-bs-toggle="tab" data-bs-target="#tab9pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                        Bước 9: Xử lý sự kiện ở client/client.js
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab10" data-bs-toggle="tab" data-bs-target="#tab10pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                       Bước 10: CSS cho chat box
+                    </a>
+                </li>
+                <hr>
+                <b>Nâng cao 1</b>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link " id="tab11" data-bs-toggle="tab" data-bs-target="#tab11pane" type="button"
+                       role="tab" aria-controls="home-tab-pane" aria-current="page" href="#">
+                       Bước 11: Tạo khung để show camera
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="col-md-9 col-12">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab1pane" role="tabpanel" aria-labelledby="tab1"
+                     tabindex="0">
+                    <h3>
+                        Setup NodeJS
+                    </h3>
+                    Tải về tại: <a href="https://nodejs.org/en/download">https://nodejs.org/en/download</a>
+                    <img src="images/1.png" class="img-fluid" style="width: 80%" alt="">
+                    <hr>
+                </div>
+                <div class="tab-pane fade " id="tab2pane" role="tabpanel" aria-labelledby="tab2" tabindex="0">
+                    <h3>
+                        Tạo thư mục có cấu trúc:
+                        <br>
+                        <div class="d-flex" style="align-items:center;justify-content: space-evenly">
+                            <code>
+                                chat-website
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;|
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;|
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;|---- client
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----index.html
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;----client.js
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;|
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;|-----server.js
+                            </code>
+                            <img src="images/2.png" alt="" style="height: max-content" class="img-fluid">
+                        </div>
+                    </h3>
+                    <p>
+                        Trong đó: <code>chat-website</code> là tên thư mục bạn muốn đặt cho project này.
+                    </p>
+                </div>
+                <div class="tab-pane fade " id="tab3pane" role="tabpanel" aria-labelledby="tab3" tabindex="0">
+                    <h3>
+                        Khởi tạo Nodejs và các thư viện cần dùng, trong project này chúng ta sẽ dùng <i>socket.io</i> và
+                        <i>express</i>
+                    </h3>
+                    <div class="d-flex">
+                        <div>
+                            1: Mở Terminal tại thư mục <code>chat-website</code> bằng cách click chuột phải vào thư mục
+                            và chọn <code>Open in Terminal</code>
+                            <br>
+                            2: Gõ các dòng lệnh sau:
+                            <br>
+                            <code>
+                                npm init -y
+                            </code>
+                            <a href="javascript:" class="clipboard" data-clipboard-text="npm init -y">
+                                <i class="fa-regular fa-copy"></i>
+                            </a>
+                            <br>
+                            <code>
+                                npm install express socket.io
+                                <a href="javascript:" class="clipboard"
+                                   data-clipboard-text="npm install express socket.io">
+                                    <i class="fa-regular fa-copy"></i>
+                                </a>
+                            </code>
+                        </div>
+                        <div><img src="images/3.png" alt="" class="img-fluid"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="tab4pane" role="tabpanel" aria-labelledby="tab4" tabindex="0">
+                    <h3>
+                        Thiết lập server.js
+                    </h3>
+                    Dán đoạn code sau vào file server.js
+                    <a href="javascript:" class="clipboard" data-clipboard-text="
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/client/index.html');
+});
+app.get('/client.js', (req, res) => {
+    res.sendFile(__dirname + '/client/client.js');
+});
+
+
+server.listen(3000, () => {
+    console.log('Server is listening on port http://localhost:3000');
+});
+">
+                        <i class="fa-regular fa-copy"></i>
+                    </a>
+                    <div style="max-height: 300px; overflow-y: auto;     position: relative;">
+                        <div style="width: 100%; height: 300px; overflow-y: auto">
+                            <div class="code" id="code1">
+const express = require('express');
+const http = require('http');
+const socketIo = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/client/index.html');
+});
+app.get('/client.js', (req, res) => {
+    res.sendFile(__dirname + '/client/client.js');
+});
+
+
+server.listen(3000, () => {
+    console.log('Server is listening on port http://localhost:3000');
+});
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>
+                        Sau khi dán vào file <code>server.js</code>
+                        <br>ở terminal của thư mục <code>chat-website</code>
+                        được mở ở bước 3 gõ lệnh:
+                    <br>
+                    <code>
+                        node server.js
+                    </code><a href="javascript:" class="clipboard" data-clipboard-text="node server.js">
+                        <i class="fa-regular fa-copy"></i>
+                    </a>
+                    </p>
+                    Kết quả:
+                    <br>
+                    <img src="images/4.png" alt="">
+                </div>
+
+                <div class="tab-pane fade " id="tab5pane" role="tabpanel" aria-labelledby="tab5" tabindex="0">
+                    <h3>
+                        Xây dựng khung website.
+                    </h3>
+                    <p>
+                        Dán toàn bộ đoạn sau vào file <b><code>client/index.html</code></b>
+                    </p>
+                    <div style="overflow-y: auto; overflow-x: auto">
+                        <xmp>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simple Chat using SocketIO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<h1 align="center">Chat with Strangers</h1>
+<!--CSS start-->
+<style>
+
+</style>
+<!--CSS end-->
+
+
+<div class="container">
+    <div class="row">
+        <!--Content start-->
+        <!--Content end-->
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!--Script start-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="client.js"></script>
+<!--Script end-->
+</body>
+</html>
+                        </xmp>
+                    </div>
+                </div>
+                <div class="tab-pane fade " id="tab6pane" role="tabpanel" aria-labelledby="tab6" tabindex="0">
+                    <h3>
+                        Bước 6: Tạo không gian làm việc
+                    </h3>
+                    Tạo 3 ô textbox gồm: <b>RoomID</b>, <b>Nickname</b>, <b>Message</b> ,1 nút: "<b>Send</b>" và một khung để hiển thị chat.
+                    <br>
+                    Đặt đoạn code này vào phía dưới "<code><\!--Content start --!></code>"
+<div style="width: 100%; height: 100%; overflow: auto">
+    <xmp>
+        <div class="col-4">
+            <label for="roomId">
+                Room ID
+            </label>
+            <input type="text" class="form-control" name="roomId" id="roomId" placeholder="Room ID">
+            <label for="nickname">
+                Nickname
+            </label>
+            <input type="text" class="form-control" name="name" id="nickname" placeholder="Nickname">
+            <button type="button" id="connect" class="btn btn-primary">Connect</button>
+            <br>
+            <label for="messages">
+                Messages
+            </label>
+            <input type="text" class="form-control" name="name" id="messages" placeholder="Messages">
+            <br>
+            <button type="button" id="send" class="btn btn-success">Send</button>
+        </div>
+        <div class="col-8" style="border: 1px dashed orange">
+            <h4>Chat:</h4>
+            <div id="chatbox" >
+
+            </div>
+        </div>
+    </xmp>
+</div>
+                </div>
+                <div class="tab-pane fade " id="tab7pane" role="tabpanel" aria-labelledby="tab7" tabindex="0">
+                    <h3>
+                        Kiểm thử lần đầu tiên
+                    </h3>
+                    Mở trang <a href="http://localhost:3000">http://localhost:3000/</a> để kiểm tra.
+                    <br>
+                    Kết quả:
+                    <br>
+                    <img src="images/5.png" class="img-fluid" alt="">
+                </div>
+                <div class="tab-pane fade " id="tab8pane" role="tabpanel" aria-labelledby="tab8" tabindex="0">
+                    <h3>
+                        Lắng nghe sự kiện và xử lý kết nối từ SocketIO
+                    </h3>
+                    <p>
+                        Dán đoạn code sau vào server.js
+                    </p>
+                    <a href="javascript:" class="clipboard" data-clipboard-text="
+let users = {};
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    socket.on('join', (data) => {
+        // Join a specific room
+        socket.join(data.room);
+        // Store the user's nickname in the users object
+        users[socket.id] = { nickname: data.nickname, room: data.room };
+        io.to(data.room).emit('chat_message', { nickname: 'Admin', message: users[socket.id].nickname+' joined the room!' });
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+        if(users[socket.id])
+            io.to(users[socket.id].room).emit('chat_message', { nickname: 'Admin', message: users[socket.id].nickname+' has left the room!' });
+        delete users[socket.id];
+    });
+
+    socket.on('chat_message', (data) => {
+        // Broadcast the message to everyone in the same room
+        io.to(data.room).emit('chat_message', { nickname: data.nickname, message: data.message });
+    });
+});
+">
+                        <i class="fa-regular fa-copy"></i>
+                    </a>
+                    <div style="max-height: 500px; overflow-y: auto;     position: relative;">
+                        <div style="width: 100%; height: 500px; overflow-y: auto">
+                            <div class="code" id="code2">
+let users = {};
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    socket.on('join', (data) => {
+        // Join a specific room
+        socket.join(data.room);
+        // Store the user's nickname in the users object
+        users[socket.id] = { nickname: data.nickname, room: data.room };
+        io.to(data.room).emit('chat_message', { nickname: 'Admin', message: users[socket.id].nickname+' joined the room!' });
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
+        if(users[socket.id])
+            io.to(users[socket.id].room).emit('chat_message', { nickname: 'Admin', message: users[socket.id].nickname+' has left the room!' });
+        delete users[socket.id];
+    });
+
+    socket.on('chat_message', (data) => {
+        // Broadcast the message to everyone in the same room
+        io.to(data.room).emit('chat_message', { nickname: data.nickname, message: data.message });
+    });
+});
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade " id="tab9pane" role="tabpanel" aria-labelledby="tab9" tabindex="0">
+                    <h3>
+                        Xử lý sự kiện ở client/client.js
+                    </h3>
+                    <p>
+                        Dán đoạn code sau vào server.js
+                    </p>
+                    <a href="javascript:" class="clipboard" data-clipboard-text="
+
+    const socket = io();
+    let room;
+    let nickname;
+    let joined = false;
+
+    $('#connect').click(function() {
+        room = $('#roomId').val();
+        nickname = $('#nickname').val();
+        if(room!='' && nickname!='')
+        {
+            socket.emit('join', { room, nickname });
+            joined = true;
+        }
+        else
+            alert('Please fill in roomId and nickname!');
+    });
+    $('#send').click(function() {
+        if(joined)
+        {
+            if($('#messages').val()!='')
+            {
+                socket.emit('chat_message', { room, nickname, message: $('#messages').val() });
+                $('#messages').val('');
+            }
+        }
+        else
+        {
+            alert('You did not join any room.')
+        }
+    })
+    $('#messages').keypress(function (event) {
+        if (event.keyCode === 13) {
+            $('#send').click();
+        }
+    });
+    socket.on('chat_message', function(msg) {
+        $('#chatbox').append('<p><b>'+msg.nickname+': </b>'+msg.message+'</p>')
+        // Scroll to the bottom of the chat window for new messages
+        $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
+    });
+
+">
+                        <i class="fa-regular fa-copy"></i>
+                    </a>
+                    <div style="max-height: 500px; overflow-y: auto;     position: relative;">
+                        <div style="width: 100%; height: 500px; overflow-y: auto">
+                            <div class="code" id="code3">
+
+    const socket = io();
+    let room;
+    let nickname;
+    let joined = false;
+
+    $('#connect').click(function() {
+        room = $('#roomId').val();
+        nickname = $('#nickname').val();
+        if(room!='' && nickname!='')
+        {
+            socket.emit('join', { room, nickname });
+            joined = true;
+        }
+        else
+            alert('Please fill in roomId and nickname!');
+    });
+    $('#send').click(function() {
+        if(joined)
+        {
+            if($('#messages').val()!='')
+            {
+                socket.emit('chat_message', { room, nickname, message: $('#messages').val() });
+                $('#messages').val('');
+            }
+        }
+        else
+        {
+            alert('You did not join any room.')
+        }
+    })
+    $('#messages').keypress(function (event) {
+        if (event.keyCode === 13) {
+            $('#send').click();
+        }
+    });
+    socket.on('chat_message', function(msg) {
+        $('#chatbox').append('<p><b>'+msg.nickname+': </b>'+msg.message+'</p>')
+        // Scroll to the bottom of the chat window for new messages
+        $('#chatbox').scrollTop($('#chatbox')[0].scrollHeight);
+    });
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade " id="tab10pane" role="tabpanel" aria-labelledby="tab10" tabindex="0">
+                    <h3>
+                        CSS cho chatbox
+                    </h3>
+<p>Dán đoạn này vào dưới "<code>CSS start</code>" thuộc file <code>client/index.html</code> <a href="javascript:" class="clipboard" data-clipboard-text="
+#chatbox
+{
+    max-height: 80vh;
+    overflow-y: auto;
+}">
+    <i class="fa-regular fa-copy"></i>
+</a></p>
+                            <code>
+#chatbox <br>
+{ <br>
+    &nbsp;&nbsp;&nbsp;&nbsp; max-height: 80vh;
+                                <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;overflow-y: auto;
+                                <br>
+}
+
+                            </code>
+
+
+                    </div>
+
+                <div class="tab-pane fade " id="tab11pane" role="tabpanel" aria-labelledby="tab11" tabindex="0">
+                    <h3>
+                        Tạo khung để show camera
+                    </h3>
+                    Dán đoạn code sau vào file <code>client/index.html</code>, phía dưới nút "<b>Send</b>"
+                    <img src="images/6.png" alt="">
+                    <xmp>
+<hr>
+<button id="start-camera">Start Camera</button>
+<div id="camera-container" style="display: none;">
+    <video style="width: 300px" id="camera-stream" autoplay></video>
+</div>
+                    </xmp>
+                </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://kit.fontawesome.com/c6ccf656ee.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.31.1/ace.js"
+            integrity="sha512-a9+UssxQ7SRBDf5iwiGlGP1WezkIpdqKKIO37B3ellyQRjdrpj+NuDWme/nJQXkALyVpahGXRpJX7mLTvctyoQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        var editor;
+         ace.edit("code1",{
+             mode: "ace/mode/javascript",
+             theme: "ace/theme/monokai"
+         });
+         ace.edit("code2",{
+             mode: "ace/mode/javascript",
+             theme: "ace/theme/monokai"
+         });
+         ace.edit("code3",{
+             mode: "ace/mode/javascript",
+             theme: "ace/theme/monokai"
+         });
+    </script>
+    <script>
+        var clipboard = new ClipboardJS('.clipboard');
+
+        clipboard.on('success', function (e) {
+            toastr["success"]("Copied!")
+            e.clearSelection();
+        });
+    </script>
+</body>
+</html>
